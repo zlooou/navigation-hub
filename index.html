@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101114">
+  <meta name="description" content="简洁、可自托管的个人导航工作台。收藏常用网站、查看订阅、管理你的数字入口。">
+  <title>Orbit — 你的网络起点</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#home" aria-label="Orbit 首页">
+        <span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="10"/><ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-35 16 16)"/><circle class="brand-dot" cx="25" cy="9" r="2.3"/></svg></span>
+        <span>orbit<span class="brand-period">.</span></span>
+      </a>
+      <div class="workspace-label">工作空间</div>
+      <nav class="main-nav" aria-label="主导航">
+        <button class="nav-item active" data-view="home"><span class="nav-icon">⌂</span>首页</button>
+        <button class="nav-item" data-view="saved"><span class="nav-icon">◇</span>我的收藏<span class="nav-count" id="bookmark-count">0</span></button>
+        <button class="nav-item" data-view="feeds"><span class="nav-icon">◉</span>资讯订阅<span class="nav-live"></span></button>
+      </nav>
+      <div class="sidebar-divider"></div>
+      <div class="workspace-label category-label">分类 <button class="tiny-add" id="add-category" aria-label="添加分类">＋</button></div>
+      <nav class="category-nav" id="category-nav" aria-label="书签分类"></nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-card"><span class="sparkle">✳</span><strong>你的空间，你做主</strong><p>数据保存在当前浏览器。部署后可接入自己的服务。</p><a href="https://github.com/zlooou/navigation-hub" target="_blank" rel="noreferrer">了解项目 <span>↗</span></a></div>
+        <button class="profile-button" id="profile-button"><span class="avatar">O</span><span class="profile-copy"><strong>个人空间</strong><small>本地体验模式</small></span><span class="more">···</span></button>
+      </div>
+    </aside>
+
+    <main class="main-content" id="home">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobile-menu" aria-label="打开菜单">☰</button>
+        <div class="breadcrumb">工作空间 <span>/</span> <strong id="breadcrumb-title">首页</strong></div>
+        <div class="top-actions">
+          <button class="icon-button privacy-button" id="privacy-toggle" title="切换本地隐私模式"><span class="privacy-icon">◉</span><span class="privacy-text">隐私模式</span><span class="toggle-track"><i></i></span></button>
+          <button class="icon-button theme-button" id="theme-toggle" title="切换主题" aria-label="切换主题">☼</button>
+          <button class="add-button" id="open-add"><span>＋</span> 添加网址</button>
+        </div>
+      </header>
+      <div class="content-wrap">
+        <section class="greeting-row">
+          <div><p class="eyebrow" id="today-label">你的数字空间</p><h1 id="greeting">早上好<span class="wave">✳</span></h1><p class="subheading">把常用的，放在触手可及的地方。</p></div>
+          <div class="date-chip"><span class="date-dot"></span><span id="date-display"></span></div>
+        </section>
+        <section class="search-section" aria-label="搜索">
+          <div class="search-box"><span class="search-symbol">⌕</span><input id="search-input" type="search" placeholder="搜索网站、分类或输入网址…" autocomplete="off"><kbd>⌘ K</kbd><button class="clear-search" id="clear-search" aria-label="清除搜索">×</button></div>
+          <div class="quick-hints"><span>试试</span><button data-query="设计">设计</button><button data-query="开发">开发</button><button data-query="阅读">阅读</button></div>
+        </section>
+        <section class="section-block" id="favorites-section">
+          <div class="section-heading"><div><span class="section-kicker">QUICK ACCESS</span><h2 id="section-title">常用网站 <span class="heading-count" id="visible-count"></span></h2></div><button class="text-action" id="manage-bookmarks">管理收藏 <span>→</span></button></div>
+          <div class="bookmark-grid" id="bookmark-grid"></div>
+          <div class="empty-state hidden" id="empty-state"><span class="empty-icon">⌕</span><strong>还没有找到匹配的网站</strong><p>试试其他关键词，或添加一个新网址。</p><button class="outline-button" id="empty-add">＋ 添加网址</button></div>
+        </section>
+        <section class="lower-grid">
+          <div class="feed-panel panel" id="feed-panel">
+            <div class="panel-heading"><div><span class="section-kicker">YOUR READING LIST</span><h2>稍后阅读</h2></div><button class="round-action" id="feed-refresh" aria-label="刷新订阅">↻</button></div>
+            <div class="feed-list" id="feed-list"></div>
+            <button class="panel-footer" id="open-feeds">查看订阅中心 <span>→</span></button>
+          </div>
+          <aside class="right-rail">
+            <div class="ad-card" id="ad-card"><div class="ad-topline"><span class="ad-label">赞助推荐</span><button class="ad-menu" aria-label="广告选项">···</button></div><div class="ad-art"><span class="ad-orbit orbit-one"></span><span class="ad-orbit orbit-two"></span><span class="ad-art-word">FOCUS</span><span class="ad-spark">✦</span></div><div class="ad-copy"><span class="ad-category">效率工具 · 本周精选</span><h3>留一点空间<br>给专注的自己。</h3><p>一个更安静、更清晰的工作方式。</p><a href="#sponsor" class="ad-cta" id="ad-link">了解更多 <span>↗</span></a></div><div class="ad-footnote">示例广告位 · 可在设置中替换</div></div>
+            <div class="privacy-note"><span class="lock-icon">⌑</span><div><strong>隐私，由你掌控</strong><p>隐私模式会隐藏广告并停止记录本地访问状态。它不是 VPN，也不会隐藏你的 IP。</p></div></div>
+          </aside>
+        </section>
+        <footer class="page-footer"><span>用一点点秩序，换很多自由。</span><span>ORBIT <i>·</i> PERSONAL WEB HUB</span></footer>
+      </div>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <dialog class="modal" id="bookmark-modal">
+    <form method="dialog" id="bookmark-form">
+      <div class="modal-heading"><div><span class="section-kicker">MAKE IT YOURS</span><h2>添加一个网址</h2></div><button class="modal-close" value="cancel" aria-label="关闭">×</button></div>
+      <label for="site-title">网站名称</label><input id="site-title" name="title" placeholder="例如：Linear" required maxlength="60">
+      <label for="site-url">网址</label><input id="site-url" name="url" type="url" placeholder="https://example.com" required>
+      <label for="site-category">分类</label><select id="site-category" name="category"></select>
+      <label for="site-description">一句描述 <span class="optional">选填</span></label><input id="site-description" name="description" placeholder="它能帮你做什么？" maxlength="100">
+      <div class="modal-actions"><button class="cancel-button" value="cancel">取消</button><button class="add-button" id="save-bookmark" value="default">保存网址 <span>→</span></button></div>
+    </form>
+  </dialog>
+
+  <dialog class="modal feed-modal" id="feeds-modal">
+    <form method="dialog"><div class="modal-heading"><div><span class="section-kicker">READ WHAT MATTERS</span><h2>资讯订阅</h2></div><button class="modal-close" value="cancel" aria-label="关闭">×</button></div>
+      <p class="modal-description">把你关注的来源聚在一起。当前展示演示内容；接入真实订阅需配置 RSS 服务，例如 Miniflux 或 FreshRSS。</p>
+      <div class="feed-service"><span class="service-icon">◉</span><div><strong>RSS 阅读器尚未连接</strong><small>配置服务地址后，在这里查看你的订阅。</small></div><span class="status-pill">未连接</span></div>
+      <a class="service-link" href="https://miniflux.app/" target="_blank" rel="noreferrer">了解 Miniflux <span>↗</span></a>
+      <div class="modal-actions"><button class="add-button" value="cancel">知道了</button></div>
+    </form>
+  </dialog>
+  <script src="app.js"></script>
+</body>
+</html>
